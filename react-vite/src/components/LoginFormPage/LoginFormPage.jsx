@@ -52,7 +52,7 @@ function LoginFormPage() {
         errors.map((message) => <p key={message}>{message}</p>)}
       <form onSubmit={handleSubmit}>
         <label>
-          Email
+          Email:&nbsp;
           <input
             type="text"
             value={email}
@@ -61,8 +61,9 @@ function LoginFormPage() {
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
+        &nbsp;&nbsp;&nbsp;
         <label>
-          Password
+          Password:&nbsp;
           <input
             type="password"
             value={password}
@@ -73,8 +74,9 @@ function LoginFormPage() {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
+      <br/>
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
-        <button style={{textAlign: 'center'}} onClick={handleLoginDemoUser}>
+        <button className='demo-user-login' onClick={handleLoginDemoUser}>
           Demo User Login
         </button>
       </div>

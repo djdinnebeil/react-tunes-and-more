@@ -46,7 +46,7 @@ function SignupFormPage() {
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
         <label>
-          Email
+          Email:&nbsp;
           <input
             type="text"
             value={email}
@@ -56,7 +56,7 @@ function SignupFormPage() {
         </label>
         {errors.email && <p>{errors.email}</p>}
         <label>
-          Username
+          Username:&nbsp;
           <input
             type="text"
             value={username}
@@ -66,7 +66,7 @@ function SignupFormPage() {
         </label>
         {errors.username && <p>{errors.username}</p>}
         <label>
-          Password
+          Password:&nbsp;
           <input
             type="password"
             value={password}
@@ -76,7 +76,7 @@ function SignupFormPage() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <label>
-          Confirm Password
+          Confirm Password:&nbsp;
           <input
             type="password"
             value={confirmPassword}

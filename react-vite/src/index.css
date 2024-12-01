@@ -294,3 +294,15 @@ button:disabled:hover {
 tr {
     margin: 20px;
 }
+
+.demo-user-login {
+    text-align: center;
+    width: 200px;
+    background-color: lightblue;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.demo-user-login:hover {
+    background-color: lightskyblue;
+}

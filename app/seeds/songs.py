@@ -84,6 +84,7 @@ def seed_songs():
         duration=324,
         file_url='https://tunes-and-more-music.s3.us-east-1.amazonaws.com/FF8-OST-Find_Your_Way.mp3'
     )
+
     db.session.add(song1)
     db.session.add(song2)
     db.session.add(song3)

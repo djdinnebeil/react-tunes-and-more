@@ -145,7 +145,7 @@ useEffect(() => {
                       <span className="song-artist">{song.artist}</span>
                     </div>
                   </button>
-                </div>
+                </div>&nbsp;
                 <button onClick={() => removeSong(song.id)} className="remove-button">
                   Remove
                 </button>

@@ -113,6 +113,7 @@ const ListeningHistoryPage = () => {
                     >
                       Reset Play Count
                     </button>
+                    &nbsp;
                     <button
                       onClick={() => removeFromHistory(entry.id)}
                       className="remove-button"
