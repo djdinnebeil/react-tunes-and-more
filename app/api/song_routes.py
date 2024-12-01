@@ -16,12 +16,18 @@ song_routes = Blueprint('songs', __name__)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'mp3'}
 
+@song_routes.route('/', methods=['GET'])
+@login_required
+def get_songs():
+    songs = Song.query.filter_by(user_id=current_user.id).all()  # Filter songs by user
+    return jsonify([song.to_dict() for song in songs])
+
+
 @song_routes.route('/upload', methods=['GET'])
 @login_required
 def upload_song_page():
     # Default form render (empty fields)
     return jsonify({'message': 'Upload page'})
-
     # return render_template('upload_song.html', metadata={})
 
 
@@ -104,11 +110,45 @@ def save_song():
     return jsonify(new_song.to_dict()), 201
 
 
-@song_routes.route('/', methods=['GET'])
+@song_routes.route('/upload/history', methods=['GET'])
 @login_required
-def get_songs():
-    songs = Song.query.filter_by(user_id=current_user.id).all()  # Filter songs by user
-    return jsonify([song.to_dict() for song in songs])
+def upload_history():
+    upload_history = Song.query.filter_by(user_id=current_user.id).order_by(Song.created_at).all()
+    if not upload_history:
+        return []
+    upload_history_data = [entry.to_dict() for entry in upload_history]
+    print(upload_history_data)
+    return upload_history_data
+
+
+@song_routes.route('/update/<int:song_id>', methods=['PATCH'])
+@login_required
+def update_song(song_id):
+    song = Song.query.get(song_id)
+
+    if not song:
+        return jsonify({"error": "Song not found"}), 404
+
+    if song.user_id != current_user.id:
+        return jsonify({"error": "Unauthorized"}), 403
+
+    # Get updated details from the request
+    name = request.json.get('name', song.name)
+    artist = request.json.get('artist', song.artist)
+    album = request.json.get('album', song.album)
+    genre = request.json.get('genre', song.genre)
+    duration = request.json.get('duration', song.duration)
+
+    # Update song details
+    song.name = name
+    song.artist = artist
+    song.album = album
+    song.genre = genre
+    song.duration = duration
+
+    db.session.commit()
+
+    return jsonify(song.to_dict()), 200
 
 
 @song_routes.route('/play/<int:song_id>', methods=['POST'])
@@ -201,3 +241,6 @@ def remove_from_history(history_id):
     db.session.delete(history_entry)
     db.session.commit()
     return jsonify({"message": "Song removed from history", "song_id": history_id}), 200
+
+
+
