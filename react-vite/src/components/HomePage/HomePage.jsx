@@ -1,4 +1,5 @@
 import {useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
 
 
 function HomePage() {
@@ -7,7 +8,8 @@ function HomePage() {
     return (
       <>
         <h1>Welcome to Tunes and More</h1>
-      {sessionUser && <p>You are logged in as {sessionUser.username}</p>}
+          {!sessionUser &&<p><NavLink to="/signup">Sign up</NavLink> or  <NavLink to="/login"> login </NavLink> to get started!</p>}
+      {sessionUser && <p>You are logged in as {sessionUser.username}.</p>}
     </>
     )
 }

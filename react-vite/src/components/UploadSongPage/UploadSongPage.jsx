@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import jsmediatags from 'jsmediatags';
 import {useSelector} from "react-redux";
 
 const UploadSongPage = () => {
   const [file, setFile] = useState(null);
   const sessionUser = useSelector((state) => state.session.user);
+  const fileInputRef = useRef(null);
+
+
   const [metadata, setMetadata] = useState({
     name: '',
     artist: '',
@@ -62,6 +65,13 @@ const UploadSongPage = () => {
     setMetadata((prev) => ({ ...prev, [name]: value }));
   };
 
+  const resetFileInput = () => {
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Reset the file input value
+    }
+  };
+
   const handleUpload = async (event) => {
     event.preventDefault();
 
@@ -89,7 +99,7 @@ const UploadSongPage = () => {
           successMessage: `${metadata.name} uploaded successfully!`,
           errorMessage: '',
         });
-        setFile(null);
+        // resetFileInput();
         setMetadata({
           name: '',
           artist: '',
@@ -104,6 +114,7 @@ const UploadSongPage = () => {
           ...uploadStatus,
           isUploading: false,
           errorMessage: errorData.errors || 'Upload failed. Please try again.',
+          successMessage: '',
         });
       }
     } catch (error) {
@@ -127,6 +138,7 @@ const UploadSongPage = () => {
           type="file"
           id="file"
           accept=".mp3"
+          ref={fileInputRef}
           onChange={handleFileChange}
           required
         />
@@ -137,6 +149,7 @@ const UploadSongPage = () => {
 
       {isMetadataVisible && (
         <div>
+          <br/><br/>
           <h2>Edit Song Details</h2>
           <form onSubmit={handleUpload}>
             <label htmlFor="name">Song Name:</label>
@@ -180,6 +193,8 @@ const UploadSongPage = () => {
               id="duration"
               value={metadata.duration}
               onChange={handleMetadataChange}
+              readOnly={true}
+              style={{backgroundColor: '#e9ecef', color:'#343a40'}}
               required
             />
             <button type="submit">

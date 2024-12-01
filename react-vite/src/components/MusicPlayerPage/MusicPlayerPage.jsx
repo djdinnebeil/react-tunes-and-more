@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import {useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
 
 const MusicPlayer = () => {
   const [songs, setSongs] = useState([]);
@@ -131,7 +132,8 @@ useEffect(() => {
         <h2>Your Songs</h2>
         <div className="songs-grid">
   {Array.isArray(songs) && songs.length === 0 ? (
-            <p>No songs added.</p>
+            <p>No songs added. <NavLink to="/upload">Click here to upload a Song</NavLink>
+</p>
           ) : (
                 Array.isArray(songs) &&
             songs.map((song, index) => (

@@ -41,7 +41,7 @@ const ListeningHistoryPage = () => {
       .then(() => {
         setHistory((prevHistory) =>
           prevHistory.map((entry) =>
-            entry.id === historyId ? {...entry, play_count: 0} : entry
+            entry.id === historyId ? {...entry, play_count: 0, last_played: ''} : entry
           )
         );
       })
@@ -107,7 +107,7 @@ const ListeningHistoryPage = () => {
                   <td className="play-count">{entry.play_count}</td>
                   <td>{entry.last_played}</td>
                   <td>
-                    <button
+                    <button disabled={entry.play_count === 0}
                       onClick={() => resetPlayCount(entry.id)}
                       className="reset-button"
                     >

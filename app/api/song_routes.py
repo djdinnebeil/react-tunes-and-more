@@ -91,6 +91,16 @@ def save_song():
     db.session.add(new_song)
     db.session.commit()
 
+    # Create a history entry for the uploaded song with play_count=0
+    new_history = History(
+        user_id=current_user.id,
+        song_id=new_song.id,
+        play_count=0,
+        last_played=None
+    )
+    db.session.add(new_history)
+    db.session.commit()
+
     return jsonify(new_song.to_dict()), 201
 
 
@@ -176,6 +186,7 @@ def reset_play_count(history_id):
         return jsonify({"error": "History entry not found"}), 404
 
     history_entry.play_count = 0
+    history_entry.last_played = None
     db.session.commit()
     return jsonify({"message": "Play count reset successfully", "history_id": history_id}), 200
 
