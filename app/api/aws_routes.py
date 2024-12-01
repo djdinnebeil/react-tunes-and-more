@@ -43,7 +43,6 @@ def remove_file_from_s3(file_url):
     # AWS needs the image file name, not the URL,
     # so you split that out of the URL
     key = file_url.rsplit("/", 1)[1]
-    print(key)
     try:
         s3.delete_object(
         Bucket=BUCKET_NAME,

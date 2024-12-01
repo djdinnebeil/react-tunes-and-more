@@ -117,7 +117,6 @@ def upload_history():
     if not upload_history:
         return []
     upload_history_data = [entry.to_dict() for entry in upload_history]
-    print(upload_history_data)
     return upload_history_data
 
 
@@ -211,7 +210,7 @@ def view_history():
         History.query
         .options(joinedload(History.song))
         .filter_by(user_id=current_user.id)
-        .order_by(History.last_played.desc())
+        .order_by(History.play_count.desc())
         .all()
     )
     history_data = [entry.to_dict() for entry in history]
